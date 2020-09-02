@@ -19,6 +19,12 @@
 		.today {
 			width: 13%;
 		}
+		.day {
+			font-weight: normal;
+		}
+		.counter {
+			font-weight: normal;
+		}
 		.date {
 			font-weight: normal;
 		}
@@ -44,10 +50,10 @@
 		}
  	</style>
 </head>
-<body onload="cal()">
+<body onload="counter(); cal();">
 <table>
 	<tr>
-		<th style="width: 9%">Time</th>
+		<th style="width: 9%">Time<br><a class="counter">Unable to fetch Counter</a></th>
 		<th class="today">Sunday<br><a class="date">Unable to fetch date</a></th>
 		<th class="today">Monday<br><a class="date">Unable to fetch date</a></th>
 		<th class="today">Tuesday<br><a class="date">Unable to fetch date</a></th>
@@ -429,10 +435,27 @@
 </table>
 </body>
 <script type="text/javascript">
+	function counter() {
+		var c = document.getElementsByClassName("counter")[0];
+		var y = new Date().getFullYear();
+		var m = new Date().getMonth();
+		var d = new Date().getDate();
+		var n = new Date(y, m, d).getTime();
+		var f = new Date(2020, 7, 24).getTime();
+		var t = (n - f)/86400000
+		var e = Math.floor(t/7) * 2
+		var r = (t - e) + 1
+		if (t % 7 == 5) {
+			r--
+		} else if (t % 7 == 6) {
+			r -= 2
+		}
+		c.innerHTML = "Day <u>" + r + "</u> of Learning"
+	}
 	function cal() {
 		var t = document.getElementsByClassName("today");
 		var n = document.getElementsByClassName("date");
-		var ms = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+		var ms = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 		var m = new Date().getMonth();
 		var a = new Date().getDate();
 		var d = new Date().getDay();
@@ -440,10 +463,10 @@
 			d = 0
 		}
 		t[d].style.color = "red"
+		var r = 1;
 		n[d].innerHTML = ms[m] + " " + a
-		var r = 1
 		while (d != 0) {
-			d--;
+			d--
 			if (a - r < 1) {
 				if (m == 0 || m == 2 || m == 4 || m == 6 || m == 7 || m == 9 || m == 11) {
 					n[d].innerHTML = ms[m - 1] + " " + (a - r + 30);
@@ -453,13 +476,13 @@
 			} else {
 				n[d].innerHTML = ms[m] + " " + (a - r);
 			}
-			r++;
+			r++
 		}
 		var d = new Date().getDay();
-		var r = 1
+		var r = 1;
 		while (d != 7) {
-			d++;
-			if (m == 0 || m == 2 || m == 4 || m == 6 || m == 7 || m == 9 || m == 11) {
+			d++
+			if (m == 0 || m == 2 || m == 4 || m == 6 || m == 7 || m == 9) {
 				if (a + r > 31) {
 					n[d].innerHTML = ms[m + 1] + " " + (a + r - 31);
 				} else {
@@ -471,8 +494,14 @@
 				} else {
 					n[d].innerHTML = ms[m] + " " + (a + r);
 				}
+			} else if (m == 11) {
+				if (a + r > 31) {
+					n[d].innerHTML = ms[0] + " " + (a + r - 31)
+				} else {
+					n[d].innerHTML = ms[m] + " " + (a + r);
+				}
 			}
-			r++;
+			r++
 		}
 	}
 	function MATH() {
