@@ -19,6 +19,9 @@
 		.today {
 			width: 13%;
 		}
+		.date {
+			font-weight: normal;
+		}
 		.class {
 			text-align: center;
 			background-color: rgb(182,209,146);
@@ -41,17 +44,17 @@
 		}
  	</style>
 </head>
-<body onload="today()">
+<body onload="cal()">
 <table>
-	<tr style="height: 36px;">
+	<tr>
 		<th style="width: 9%">Time</th>
-		<th class="today">Sunday</th>
-		<th class="today">Monday</th>
-		<th class="today">Tuesday</th>
-		<th class="today">Wednesday</th>
-		<th class="today">Thursday</th>
-		<th class="today">Friday</th>
-		<th class="today">Saturday</th>
+		<th class="today">Sunday<br><a class="date">Unable to fetch date</a></th>
+		<th class="today">Monday<br><a class="date">Unable to fetch date</a></th>
+		<th class="today">Tuesday<br><a class="date">Unable to fetch date</a></th>
+		<th class="today">Wednesday<br><a class="date">Unable to fetch date</a></th>
+		<th class="today">Thursday<br><a class="date">Unable to fetch date</a></th>
+		<th class="today">Friday<br><a class="date">Unable to fetch date</a></th>
+		<th class="today">Saturday<br><a class="date">Unable to fetch date</a></th>
 	</tr>
 	<tr>
 		<th rowspan="4">8:00AM</th>
@@ -426,13 +429,51 @@
 </table>
 </body>
 <script type="text/javascript">
-	function today() {
-		var d = new Date().getDay();
+	function cal() {
 		var t = document.getElementsByClassName("today");
+		var n = document.getElementsByClassName("date");
+		var ms = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+		var m = new Date().getMonth();
+		var a = new Date().getDate();
+		var d = new Date().getDay();
 		if (d === 7) {
 			d = 0
 		}
 		t[d].style.color = "red"
+		n[d].innerHTML = ms[m] + " " + a
+		var r = 1
+		while (d != 0) {
+			d--;
+			if (a - r < 1) {
+				if (m == 0 || m == 2 || m == 4 || m == 6 || m == 7 || m == 9 || m == 11) {
+					n[d].innerHTML = ms[m - 1] + " " + (a - r + 30);
+				} else if (m == 1 || m == 3 || m == 5 || m == 8 || m == 10) {
+					n[d].innerHTML = ms[m - 1] + " " + (a - r + 31);
+				}
+			} else {
+				n[d].innerHTML = ms[m] + " " + (a - r);
+			}
+			r++;
+		}
+		var d = new Date().getDay();
+		var r = 1
+		while (d != 7) {
+			d++;
+			if (m == 0 || m == 2 || m == 4 || m == 6 || m == 7 || m == 9 || m == 11) {
+				if (a + r > 31) {
+					n[d].innerHTML = ms[m + 1] + " " + (a + r - 31);
+				} else {
+					n[d].innerHTML = ms[m] + " " + (a + r);
+				}
+			} else if (m == 1 || m == 3 || m == 5 || m == 8 || m == 10) {
+				if (a + r > 30) {
+					n[d].innerHTML = ms[m + 1] + " " + (a + r - 30);
+				} else {
+					n[d].innerHTML = ms[m] + " " + (a + r);
+				}
+			}
+			r++;
+		}
 	}
 	function attendence() {
 		alert("You may participate in this course synchronously, asynchronously, or a combination of both. If you miss a live Zoom class session, you are responsible for completing the required class activities, chapter quizzes, and the various assignments that are listed on the schedule.");
