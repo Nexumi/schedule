@@ -16,6 +16,9 @@
 		table, th, td {
 			border: 2px solid black;
 		}
+		.today {
+			width: 13%;
+		}
 		.class {
 			text-align: center;
 			background-color: rgb(182,209,146);
@@ -38,17 +41,17 @@
 		}
  	</style>
 </head>
-<body>
+<body onload="today()">
 <table>
 	<tr style="height: 36px;">
 		<th style="width: 9%">Time</th>
-		<th style="width: 13%">Sunday</th>
-		<th style="width: 13%">Monday</th>
-		<th style="width: 13%">Tuesday</th>
-		<th style="width: 13%">Wednesday</th>
-		<th style="width: 13%">Thursday</th>
-		<th style="width: 13%">Friday</th>
-		<th style="width: 13%">Saturday</th>
+		<th class="today">Sunday</th>
+		<th class="today">Monday</th>
+		<th class="today">Tuesday</th>
+		<th class="today">Wednesday</th>
+		<th class="today">Thursday</th>
+		<th class="today">Friday</th>
+		<th class="today">Saturday</th>
 	</tr>
 	<tr>
 		<th rowspan="4">8:00AM</th>
@@ -423,6 +426,14 @@
 </table>
 </body>
 <script type="text/javascript">
+	function today() {
+		var d = new Date().getDay();
+		var t = document.getElementsByClassName("today");
+		if (d === 7) {
+			d = 0
+		}
+		t[d].style.color = "red"
+	}
 	function attendence() {
 		alert("You may participate in this course synchronously, asynchronously, or a combination of both. If you miss a live Zoom class session, you are responsible for completing the required class activities, chapter quizzes, and the various assignments that are listed on the schedule.");
 	}
