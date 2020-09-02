@@ -442,7 +442,7 @@
 		var d = new Date().getDate();
 		var n = new Date(y, m, d).getTime();
 		var f = new Date(2020, 7, 24).getTime();
-		var t = (n - f)/86400000
+		var t = Math.floor((n - f)/86400000)
 		var e = Math.floor(t/7) * 2
 		var r = (t - e) + 1
 		if (t % 7 == 5) {
@@ -450,6 +450,56 @@
 		} else if (t % 7 == 6) {
 			r -= 2
 		}
+			/* Fall 2020 */
+		// Veterans Day
+		if (n >= 1599462000000) {
+			r--
+		}
+		// Thanksgiving Break
+		if (n >= 1606118400000) {
+			r --
+		}
+		if (n >= 1606204800000) {
+			r--
+		}
+		if (n >= 1606291200000) {
+			r--
+		}
+		if (n >= 1606377600000) {
+			r--
+		}
+		if (n >= 1606464000000) {
+			r--
+		}
+			/* Winter 2021 */
+		// No events are posted for this week
+			/* Spring 2021 */
+		// Martin Luther King Jr. Day
+		if (n >= 1610956800000) {
+			r--
+		}
+		// Spring Break
+		if (n >= 1616396400000) {
+			r--
+		}
+		if (n >= 1616482800000) {
+			r--
+		}
+		if (n >= 1616569200000) {
+			r--
+		}
+		if (n >= 1616655600000) {
+			r--
+		}
+		if (n >= 1616742000000) {
+			r--
+		}
+		// Cesar Chavez Day
+		if (n >= 1617174000000) {
+			r--
+		}	
+			/* Summer 2021 */
+		// No events are posted for this week
 		c.innerHTML = "<u>" + r + "</u> Days of Learning"
 	}
 	function cal() {
