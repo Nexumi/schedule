@@ -5,11 +5,13 @@
 	<link rel="shortcut icon" href="https://www.sfsu.edu/favicon.ico">
 	<style type="text/css">
 		body {
-			background-color: #231161;
 			user-select: none;
+			text-align: center;
+			background-color: #231161;
 		}
 		table {
 			width: 100%;
+			margin-top: 6px;
 			background-color: white;
 			border-collapse: collapse;
 		}
@@ -19,17 +21,23 @@
 		.today {
 			width: 13%;
 		}
-		.day {
-			font-weight: normal;
-		}
 		.counter {
+			padding: 3px;
+			color: #ddd;
+			font-weight: bold;
+			border-width: 3px;
+			border-radius: 4px;
+			border-color: gold;
+			border-style: solid;
+		}
+		.time {
 			font-weight: normal;
+			font-style: italic;
 		}
 		.date {
 			font-weight: normal;
 		}
 		.class {
-			text-align: center;
 			background-color: rgb(182,209,146);
 		}
 		.clickable {
@@ -50,10 +58,11 @@
 		}
  	</style>
 </head>
-<body onload="counter(); cal();">
+<body onload="counter(); time(); cal();">
+<p><a class="counter">Unable to fetch counter</a></p>
 <table>
 	<tr>
-		<th style="width: 9%">Time<br><a class="counter">Unable to fetch Counter</a></th>
+		<th style="width: 9%">Time<br><a class="time">Unable to fetch time</a></th>
 		<th class="today">Sunday<br><a class="date">Unable to fetch date</a></th>
 		<th class="today">Monday<br><a class="date">Unable to fetch date</a></th>
 		<th class="today">Tuesday<br><a class="date">Unable to fetch date</a></th>
@@ -580,6 +589,21 @@
 			var s = "th"
 		}
 		c.innerHTML = "<u>" + r + s + "</u> day of learning"
+	}
+	function time() {
+		var h = new Date().getHours();
+		var m = new Date().getMinutes();
+		var s = new Date().getSeconds();
+		m = zero(m)
+		s = zero(s)
+		document.getElementsByClassName("time")[0].innerHTML = h + ":" + m + ":" + s
+		setTimeout(time, 500);
+	}
+	function zero(x) {
+		if (x < 10) {
+			x = "0" + x
+		}
+		return x
 	}
 	function cal() {
 		var t = document.getElementsByClassName("today");
