@@ -449,6 +449,7 @@
 		var y = new Date().getFullYear();
 		var m = new Date().getMonth();
 		var d = new Date().getDate();
+		var g = new Date().getDay();
 		var n = new Date(y, m, d).getTime();
 		var f = new Date(2020, 7, 24).getTime();
 		var t = Math.floor((n - f)/86400000)
@@ -588,7 +589,11 @@
 		} else {
 			var s = "th"
 		}
-		c.innerHTML = "<u>" + r + s + "</u> day of learning"
+		if (g == 0 || g == 6 || /* Fall 2020 */ /* Labor Day */ n == 1599462000000 || /* Veterans Day */ n == 1605081600000 || /* Thanksgiving Break */ n == 1606118400000 || n == 1606204800000 || n == 1606291200000 || n == 1606377600000 || n == 1606464000000 || /* Winter Break */ n == 1608883200000 || n == 1609142400000 || n == 1609228800000 || n == 1609315200000 || n == 1609401600000 || n == 1609488000000 /* Winter Session *//* Week 1 *//* n == 1609747200000 || n == 1609833600000 || n == 1609920000000 || n == 1610006400000 || n == 1610092800000 *//* Week 2 *//* n == 1610352000000 || n == 1610438400000 || n == 1610524800000 || n == 1610611200000 || n == 1610697600000 *//* Week 3 *//* n == 1610956800000 || n == 1611043200000 || n == 1611129600000 || n == 1611216000000 || n == 1611302400000 */ || /* Spring 2021 */ /* Martin Luther King Jr. Day */ n == 1610956800000 || /* Spring Break */ n == 1616396400000 || n == 1616482800000 || n == 1616569200000 || n == 1616655600000 || n == 1616742000000 || /* Cesar Chavez Day */ n == 1617174000000) {
+			c.innerHTML = "<u>" + r + "</u> days of learning"
+		} else {
+			c.innerHTML = "<u>" + r + s + "</u> day of learning"
+		}
 	}
 	function time() {
 		var h = new Date().getHours();
@@ -612,9 +617,6 @@
 		var m = new Date().getMonth();
 		var a = new Date().getDate();
 		var d = new Date().getDay();
-		if (d === 7) {
-			d = 0
-		}
 		t[d].style.color = "red"
 		var r = 1;
 		n[d].innerHTML = ms[m] + " " + a
@@ -633,7 +635,7 @@
 		}
 		var d = new Date().getDay();
 		var r = 1;
-		while (d != 7) {
+		while (d != 6) {
 			d++
 			if (m == 0 || m == 2 || m == 4 || m == 6 || m == 7 || m == 9) {
 				if (a + r > 31) {
