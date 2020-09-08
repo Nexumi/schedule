@@ -618,10 +618,11 @@
 		var a = new Date().getDate();
 		var d = new Date().getDay();
 		t[d].style.color = "red"
-		var r = 1;
+		var r = 0;
 		n[d].innerHTML = ms[m] + " " + a
 		while (d != 0) {
 			d--
+			r++
 			if (a - r < 1) {
 				if (m == 0 || m == 2 || m == 4 || m == 6 || m == 7 || m == 9 || m == 11) {
 					n[d].innerHTML = ms[m - 1] + " " + (a - r + 30);
@@ -631,12 +632,12 @@
 			} else {
 				n[d].innerHTML = ms[m] + " " + (a - r);
 			}
-			r++
 		}
 		var d = new Date().getDay();
-		var r = 1;
+		var r = 0;
 		while (d != 6) {
 			d++
+			r++
 			if (m == 0 || m == 2 || m == 4 || m == 6 || m == 7 || m == 9) {
 				if (a + r > 31) {
 					n[d].innerHTML = ms[m + 1] + " " + (a + r - 31);
@@ -656,7 +657,6 @@
 					n[d].innerHTML = ms[m] + " " + (a + r);
 				}
 			}
-			r++
 		}
 	}
 	function MATH() {
