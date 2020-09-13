@@ -453,9 +453,9 @@
 		var g = new Date().getDay();
 		var n = new Date(y, m, d).getTime();
 		var f = new Date(2020, 7, 24).getTime();
-		var t = Math.floor((n - f)/86400000)
-		var e = Math.floor(t/7) * 2
-		var r = (t - e) + 1
+		var t = Math.floor((n - f)/86400000);
+		var e = Math.floor(t/7) * 2;
+		var r = (t - e) + 1;
 		if (t % 7 == 5) {
 			r--
 		} else if (t % 7 == 6) {
