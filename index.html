@@ -600,7 +600,11 @@
 		var h = new Date().getHours();
 		var m = new Date().getMinutes();
 		var s = new Date().getSeconds();
+		var ms = new Date().getMilliseconds();
 		var ap = h < 12 ? "AM" : "PM"
+		if (h == 0 && m == 0 && s == 0 && ms < 150) {
+			location.reload();
+		}
 		if (h >12) {
 			h -= 12
 		}
