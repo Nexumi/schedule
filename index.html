@@ -596,13 +596,14 @@
 			c.innerHTML = "<u>" + r + s + "</u> day of learning"
 		}
 	}
+	var cd = new Date().getDate();
 	function time() {
 		var h = new Date().getHours();
 		var m = new Date().getMinutes();
 		var s = new Date().getSeconds();
 		var ms = new Date().getMilliseconds();
 		var ap = h < 12 ? "AM" : "PM"
-		if (h == 0 && m == 0 && s == 0 && ms < 150) {
+		if (new Date().getDate() != cd) {
 			location.reload();
 		}
 		if (h > 12) {
