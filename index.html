@@ -445,11 +445,11 @@
 </table>
 </body>
 <script type="text/javascript">
+	var d = new Date().getDate();
 	function counter() {
 		var c = document.getElementsByClassName("counter")[0];
 		var y = new Date().getFullYear();
 		var m = new Date().getMonth();
-		var d = new Date().getDate();
 		var g = new Date().getDay();
 		var n = new Date(y, m, d).getTime();
 		var f = new Date(2020, 7, 24).getTime();
@@ -596,14 +596,13 @@
 			c.innerHTML = "<u>" + r + s + "</u> day of learning"
 		}
 	}
-	var cd = new Date().getDate();
 	function time() {
 		var h = new Date().getHours();
 		var m = new Date().getMinutes();
 		var s = new Date().getSeconds();
 		var ms = new Date().getMilliseconds();
 		var ap = h < 12 ? "AM" : "PM"
-		if (new Date().getDate() != cd) {
+		if (new Date().getDate() != d) {
 			location.reload();
 		}
 		if (h > 12) {
@@ -627,46 +626,47 @@
 		var n = document.getElementsByClassName("date");
 		var ms = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 		var m = new Date().getMonth();
-		var a = new Date().getDate();
-		var d = new Date().getDay();
-		t[d].style.color = "red"
+		var a = new Date().getDay();
+		t[a].style.color = "red"
 		var r = 0;
-		n[d].innerHTML = ms[m] + " " + a
-		while (d != 0) {
-			d--
+		n[a].innerHTML = ms[m] + " " + d
+		while (a != 0) {
+			a--
 			r++
-			if (a - r < 1) {
-				if (m == 0 || m == 2 || m == 4 || m == 6 || m == 7 || m == 9 || m == 11) {
-					n[d].innerHTML = ms[m - 1] + " " + (a - r + 30);
+			if (d - r < 1) {
+				if (m == 0) {
+					n[a].innerHTML = ms[11] + " " + (d - r + 31)
+				} else if (m == 2 || m == 4 || m == 6 || m == 7 || m == 9 || m == 11) {
+					n[a].innerHTML = ms[m - 1] + " " + (d - r + 30);
 				} else if (m == 1 || m == 3 || m == 5 || m == 8 || m == 10) {
-					n[d].innerHTML = ms[m - 1] + " " + (a - r + 31);
+					n[a].innerHTML = ms[m - 1] + " " + (d - r + 31);
 				}
 			} else {
-				n[d].innerHTML = ms[m] + " " + (a - r);
+				n[a].innerHTML = ms[m] + " " + (d - r);
 			}
 		}
-		var d = new Date().getDay();
+		var a = new Date().getDay();
 		var r = 0;
-		while (d != 6) {
-			d++
+		while (a != 6) {
+			a++
 			r++
 			if (m == 0 || m == 2 || m == 4 || m == 6 || m == 7 || m == 9) {
-				if (a + r > 31) {
-					n[d].innerHTML = ms[m + 1] + " " + (a + r - 31);
+				if (d + r > 31) {
+					n[a].innerHTML = ms[m + 1] + " " + (d + r - 31);
 				} else {
-					n[d].innerHTML = ms[m] + " " + (a + r);
+					n[a].innerHTML = ms[m] + " " + (d + r);
 				}
 			} else if (m == 1 || m == 3 || m == 5 || m == 8 || m == 10) {
-				if (a + r > 30) {
-					n[d].innerHTML = ms[m + 1] + " " + (a + r - 30);
+				if (d + r > 30) {
+					n[a].innerHTML = ms[m + 1] + " " + (d + r - 30);
 				} else {
-					n[d].innerHTML = ms[m] + " " + (a + r);
+					n[a].innerHTML = ms[m] + " " + (d + r);
 				}
 			} else if (m == 11) {
-				if (a + r > 31) {
-					n[d].innerHTML = ms[0] + " " + (a + r - 31)
+				if (d + r > 31) {
+					n[a].innerHTML = ms[0] + " " + (d + r - 31)
 				} else {
-					n[d].innerHTML = ms[m] + " " + (a + r);
+					n[a].innerHTML = ms[m] + " " + (d + r);
 				}
 			}
 		}
