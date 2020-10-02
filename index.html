@@ -59,7 +59,7 @@
 		}
  	</style>
 </head>
-<body onload="counter(); time(); cal();">
+<body onload="counter(); time(); cal(); re();">
 <p><a class="counter">Unable to fetch counter</a></p>
 <table>
 	<tr>
@@ -602,9 +602,6 @@
 		var s = new Date().getSeconds();
 		var ms = new Date().getMilliseconds();
 		var ap = h < 12 ? "AM" : "PM"
-		if (new Date().getDate() != d) {
-			location.reload();
-		}
 		if (h > 12) {
 			h -= 12
 		} else if (h == 0) {
@@ -670,6 +667,12 @@
 				}
 			}
 		}
+	}
+	function re() {
+		if (new Date().getDate() != cd) {
+			location.reload();
+		}
+		setTimeout(re, 5000);
 	}
 	function PLSIhow() {
 		alert("Reading and Pre-Lecture Quiz are due at 10 AM before meeting on Wednesday.")
