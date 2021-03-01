@@ -60,7 +60,7 @@
 		}
  	</style>
 </head>
-<body onload="counter(); time(); cal(); re();">
+<body>
 <p><a class="counter">Unable to fetch counter</a></p>
 <table>
 	<tr>
@@ -431,6 +431,10 @@
 </table>
 </body>
 <script type="text/javascript">
+	window.addEventListener('load', counter);
+	window.addEventListener('load', time);
+	window.addEventListener('load', cal);
+	window.addEventListener('load', re);
 	var d = new Date().getDate();
 	function counter() {
 		var c = document.getElementsByClassName("counter")[0];
