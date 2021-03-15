@@ -645,25 +645,27 @@
 		while (a != 6) {
 			a++
 			r++
-			if (m == 0 || m == 2 || m == 4 || m == 6 || m == 7 || m == 9) {
-				if (d + r > 31) {
-					n[a].innerHTML = ms[m + 1] + " " + (d + r - 31);
-				} else {
-					n[a].innerHTML = ms[m] + " " + (d + r);
-				}
-			} else if (m == 1 || m == 3 || m == 5 || m == 8 || m == 10) {
-				if (d + r > 30) {
-					n[a].innerHTML = ms[m + 1] + " " + (d + r - 30);
-				} else {
-					n[a].innerHTML = ms[m] + " " + (d + r);
-				}
-			} else if (m == 11) {
-				if (d + r > 31) {
-					n[a].innerHTML = ms[0] + " " + (d + r - 31)
-				} else {
-					n[a].innerHTML = ms[m] + " " + (d + r);
-				}
+			if (d + r > 31 && (m == 0 || m == 2 || m == 4 || m == 6 || m == 7 || m == 9)) {
+				n[a].innerHTML = ms[m + 1] + " " + (d + r - 31);
+			} else if (d + r > 31 && m == 11) {
+				n[a].innerHTML = ms[0] + " " + (d + r - 31)
+			} else if (d + r > 30 && (m == 3 || m == 5 || m == 8 || m == 10)) {
+				n[a].innerHTML = ms[m + 1] + " " + (d + r - 30);
+			} else if (d + r > 29 && m == 1 && leap()) {
+				n[a].innerHTML = ms[m + 1] + " " + (d + r - 29);
+			} else if (d + r > 28 && m == 1 && !leap()) {
+				n[a].innerHTML = ms[m + 1] + " " + (d + r - 28);
+			} else {
+				n[a].innerHTML = ms[m] + " " + (d + r);
 			}
+		}
+	}
+	function leap() {
+		y = new Date().getFullYear();
+		if (y % 4 == 0 && (y % 100 != 0 || y % 400 == 0)) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 	function re() {
