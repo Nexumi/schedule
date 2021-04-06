@@ -670,7 +670,8 @@
 	}
 	function re() {
 		if (new Date().getDate() != d) {
-			location.reload();
+			counter();
+			cal();
 		}
 		setTimeout(re, 5000);
 	}
