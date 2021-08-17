@@ -170,10 +170,10 @@
 	<tr>
 		<th rowspan="4">11:00 AM</th>
 		<td>&nbsp;</td>
-		<td rowspan="5" class="class">WGS 150 - 01<br>Seminar<br>11:00 AM - 12:15 PM<br>Online LINE</td>
-		<td rowspan="5" class="class">AA S 106 - 03<br>Lecture<br>11:00 AM - 12:15 PM<br>Online LINE</td>
-		<td rowspan="5" class="class">WGS 150 - 01<br>Seminar<br>11:00 AM - 12:15 PM<br>Online LINE</td>
-		<td rowspan="5" class="class">AA S 106 - 03<br>Lecture<br>11:00 AM - 12:15 PM<br>Online LINE</td>
+		<td rowspan="5" class="class">WGS 150 - 01<br>Seminar<br>11:00 AM - 12:15 PM<br>Online Line</td>
+		<td rowspan="5" class="class">AA S 106 - 03<br>Lecture<br>11:00 AM - 12:15 PM<br>Online Line</td>
+		<td rowspan="5" class="class">WGS 150 - 01<br>Seminar<br>11:00 AM - 12:15 PM<br>Online Line</td>
+		<td rowspan="5" class="class">AA S 106 - 03<br>Lecture<br>11:00 AM - 12:15 PM<br>Online Line</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 	</tr>
@@ -209,9 +209,9 @@
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
-		<td rowspan="5" class="class">CSC 220 - 02<br>Lecture<br>12:30 PM - 1:45 PM<br>Online LINE</td>
+		<td rowspan="5" class="class">CSC 220 - 02<br>Lecture<br>12:30 PM - 1:45 PM<br>Online Line</td>
 		<td>&nbsp;</td>
-		<td rowspan="5" class="class">CSC 220 - 02<br>Lecture<br>12:30 PM - 1:45 PM<br>Online LINE</td>
+		<td rowspan="5" class="class">CSC 220 - 02<br>Lecture<br>12:30 PM - 1:45 PM<br>Online Line</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
@@ -627,7 +627,7 @@
 		let s = new Date().getSeconds();
 		m = zero(m);
 		s = zero(s);
-		let ap = h < 12 ? "AM" : "PM";
+		let ap = (h < 12) ? "AM" : "PM";
 		h = apOffset(h);
 		sd = (tz == 7 - offset) ? "PDT" : "PST";
 		document.getElementsByClassName("time")[0].innerHTML = "<i>" + h + ":" + m + ":" + s + " " + ap + "</i>" + " " + sd;
@@ -637,7 +637,7 @@
 		if (x < 0) {
 			x += 24;
 			o = 1;
-		} else if (x > 24) {
+		} else if (x >= 24) {
 			x -= 24;
 			o = -1;
 		} else {
