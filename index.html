@@ -678,7 +678,7 @@
 
 		// offsets
 		let minutesOffset = timeX.getTimezoneOffset() / 60 % 1 * 60;
-		let hoursOffset = timeX.getTimezoneOffset() / 60 - timeX.getTimezoneOffset() / 60 % 1;
+		let hoursOffset = timeX.getTimezoneOffset() / 60 - minutesOffset / 60;
 
 		// find daylight start and end times
 		let c = 0;
