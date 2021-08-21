@@ -447,14 +447,8 @@
 	window.addEventListener('load', time);
 	window.addEventListener('load', cal);
 
-	// gobal time
-	let timeX = new Date();
-	function updateTimeX() {
-		timeX = new Date();
-		setTimeout(updateTimeX, 0);
-	}
-
 	// global variables
+	let timeX = new Date();
 	let year = timeX.getUTCFullYear();
 	let month = timeX.getUTCMonth();
 	let date = timeX.getUTCDate();
@@ -629,6 +623,7 @@
 
 	// time functions
 	function time() {
+		timeX = new Date();
 		let hours = getHours(timeX.getUTCHours());
 		let minutes = zero(timeX.getUTCMinutes());
 		let seconds = zero(timeX.getUTCSeconds());
