@@ -442,27 +442,29 @@
 </table>
 </body>
 <script type="text/javascript">
+	window.addEventListener('load', updateTimeX);
 	window.addEventListener('load', counter);
 	window.addEventListener('load', time);
 	window.addEventListener('load', cal);
-	window.addEventListener('load', re);
+
+	// gobal time
+	let timeX = new Date();
+	function updateTimeX() {
+		timeX = new Date();
+		setTimeout(updateTimeX, 0);
+	}
 
 	// global variables
-	let year = new Date().getFullYear();
-	let month = new Date().getMonth();
-	let date = new Date().getDate();
-	let timezone = new Date().getTimezoneOffset() / 60;
+	let year = timeX.getUTCFullYear();
+	let month = timeX.getUTCMonth();
+	let date = timeX.getUTCDate();
 	let dateOffset;
-	let hoursTransfer;
-	let hoursOffset = (daylight()) ? 7 - timezone : 8 - timezone;
-	let minutesOffset = hoursOffset % 1 * 60;
-	hoursOffset = hoursOffset - hoursOffset % 1;
-	let hoursOffsetFix = offsetFix();
+	let dateOffsetC;
 
 	// counter function
 	function counter() {
 		let counter = document.getElementsByClassName("counter")[0];
-		let day = new Date().getDay();
+		let day = timeX.getUTCDay();
 		let now = new Date(year, month, date).getTime();
 		let firstDate = new Date(2021, 7, 23).getTime();
 		let days = Math.floor((now - firstDate)/86400000);
@@ -627,20 +629,23 @@
 
 	// time functions
 	function time() {
-		let seconds = new Date().getSeconds();
-		seconds = zero(seconds);
-		let minutes = new Date().getMinutes() - minutesOffset;
-		minutes = minutesFix(minutes);
-		minutes = zero(minutes);
-		let hours = new Date().getHours() - hoursOffset - hoursOffsetFix - hoursTransfer;
-		hours = hoursFix(hours);
+		let hours = getHours(timeX.getUTCHours());
+		let minutes = zero(timeX.getUTCMinutes());
+		let seconds = zero(timeX.getUTCSeconds());
 		let ap = (hours < 12) ? "AM" : "PM";
 		hours = apOffset(hours);
-		tz = (timezone == 7 - (hoursOffset + (minutesOffset / 60) - hoursOffsetFix)) ? "PDT" : "PST";
+		tz = (daylight()) ? "PDT" : "PST"
 		document.getElementsByClassName("time")[0].innerHTML = "<i>" + hours + ":" + minutes + ":" + seconds + " " + ap + "</i>" + " " + tz;
+
+		if (dateOffsetC != dateOffset) {
+			re();
+		}
+
 		setTimeout(time, 0);
 	}
-	function hoursFix(h) {
+	function getHours(h) {
+		h = (daylight()) ? h - 7 : h - 8;
+
 		if (h < 0) {
 			h += 24;
 			dateOffset = 1;
@@ -653,18 +658,8 @@
 
 		return h;
 	}
-	function minutesFix(m) {
-		if (m < 0) {
-			m += 60;
-			hoursTransfer = 1;
-		} else if (m >= 60) {
-			m -= 60;
-			hoursTransfer = -1;
-		} else {
-			hoursTransfer = 0;
-		}
-
-		return m;
+	function zero(ms) {
+		return (ms < 10) ? "0" + ms : ms;
 	}
 	function apOffset(h) {
 		if (h > 12) {
@@ -675,76 +670,51 @@
 
 		return h;
 	}
-	function zero(ms) {
-		if (ms < 10) {
-			ms = "0" + ms;
-		}
-
-		return ms;
-	}
-	function daylight(currentTime = new Date().getTime()) {
 		let daylightStart;
 		let daylightEnd;
+	function daylight(currentTime = timeX.getTime()) {
 
-		// find second Sunday of March
+		// find daylight start and end times
 		let c = 0;
-		for (let x = 1; true; x++) {
-			let d = new Date(year, 2, x, 2);
+		for (let i = 1; true; i++) {
+			let s = new Date(year, 2, i, 10 - timeX.getTimezoneOffset() / 60);
+			let e = new Date(year, 10, i, 9 - timeX.getTimezoneOffset() / 60);
 
-			if (d.getDay() == 0) {
+			if (s.getUTCDay() == 0) {
 				c++
 			}
 
-			if (c == 2) {
-				daylightStart = d.getTime();
-				break;
+			if (c == 1 && s.getUTCDay() == 0) {
+				daylightEnd = e.getTime();
 			}
-		}
 
-		// find first Sunday of November
-		for (let x = 1; true; x++) {
-			let d = new Date(year, 10, x, 2);
-
-			if (d.getDay() == 0) {
-				daylightEnd = d.getTime();
+			if (c == 2) {
+				daylightStart = s.getTime();
 				break;
 			}
 		}
 
 		return (currentTime > daylightStart && currentTime < daylightEnd) ? true : false;
 	}
-	function offsetFix() {
-		// skip check if timezone is already PDT/PST
-		if (timezone == 7 || timezone == 8) {
-			return 0;
-		}
-
-		let hours = new Date().getHours() - hoursOffset - (daylight() ? 1 : -1); // +/- 1 to count for time shift in other daylight zones
-		hours = hoursFix(hours);
-		let minutes = new Date().getMinutes();
-		let seconds = new Date().getSeconds();
-		let milliseconds = new Date().getMilliseconds();
-
-		let newTime = new Date(year, month, date, hours, minutes, seconds, milliseconds);
-
-		if (!daylight() && daylight(newTime)) {
-			return -1;
-		} else if (daylight() && !daylight(newTime)) {
-			return 1;
-		} else {
-			return 0;
-		}
-	}
 
 	// calendar functions
 	function cal() {
+		// save offset
+		dateOffsetC = dateOffset;
+
 		let today = document.getElementsByClassName("today");
 		let dates = document.getElementsByClassName("date");
 		let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-		let day = new Date().getDay() - dateOffset;
+		let day = timeX.getUTCDay() - dateOffset;
 		day = dayFix(day);
-		let dateFix = (date - ((dateOffset == 0) ? 0 : dateOffset));
-		today[day].style.color = "red"
+		let dateFix = date - dateOffset;
+
+		// reset color
+		for (let i = 0; i < 7; i++) {
+			today[i].style.color = "black";
+		}
+
+		today[day].style.color = "red";
 		let offset = 0;
 		dates[day].innerHTML = months[month] + " " + dateFix;
 		while (day != 0) {
@@ -762,7 +732,7 @@
 				dates[day].innerHTML = months[month] + " " + (dateFix - offset);
 			}
 		}
-		day = new Date().getDay() - dateOffset;
+		day = timeX.getUTCDay() - dateOffset;
 		day = dayFix(day);
 		offset = 0;
 		while (day != 6) {
@@ -798,20 +768,11 @@
 
 	// soft refresh
 	function re() {
-		if (new Date().getDate() != date || new Date().getTimezoneOffset() / 60 != timezone) {
-			year = new Date().getFullYear();
-			month = new Date().getMonth();
-			date = new Date().getDate();
-			timezone = new Date().getTimezoneOffset() / 60;
-			hoursOffset = (daylight()) ? 7 - timezone : 8 - timezone;
-			minutesOffset = hoursOffset % 1 * 60;
-			hoursOffset = hoursOffset - hoursOffset % 1;
-			hoursOffsetFix = offsetFix();
-			counter();
-			time();
-			cal();
-		}
-		setTimeout(re, 5000);
+		year = timeX.getUTCFullYear();
+		month = timeX.getUTCMonth();
+		date = timeX.getUTCDate();
+		counter();
+		cal();
 	}
 </script>
 </html>
