@@ -670,9 +670,10 @@
 
 		return h;
 	}
-	function daylight(currentTime = timeX.getTime()) {
+	function daylight() {
 		// daylight calculation times
 		let daylightStart;
+		let currentTime = timeX.getTime();
 		let daylightEnd;
 
 		// offsets
