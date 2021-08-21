@@ -720,12 +720,12 @@
 			today[i].style.color = "black";
 		}
 
+		// color today red
 		today[day].style.color = "red";
+
+		// get month and date for each day of the week
 		let offset = 0;
-		dates[day].innerHTML = months[month] + " " + dateFix;
-		while (day != 0) {
-			day--;
-			offset++;
+		while (day >= 0) {
 			if (dateFix - offset < 1) {
 				if (month == 0) {
 					dates[day].innerHTML = months[11] + " " + (dateFix - offset + 31);
@@ -737,7 +737,10 @@
 			} else {
 				dates[day].innerHTML = months[month] + " " + (dateFix - offset);
 			}
+			day--;
+			offset++;
 		}
+
 		day = timeX.getUTCDay() - dateOffset;
 		day = dayFix(day);
 		offset = 0;
