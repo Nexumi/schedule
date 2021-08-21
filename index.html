@@ -678,13 +678,13 @@
 
 		// offsets
 		let minutesOffset = timeX.getTimezoneOffset() / 60 % 1 * 60;
-		let hours = timeX.getTimezoneOffset() / 60 - timeX.getTimezoneOffset() / 60 % 1;
+		let hoursOffset = timeX.getTimezoneOffset() / 60 - timeX.getTimezoneOffset() / 60 % 1;
 
 		// find daylight start and end times
 		let c = 0;
 		for (let i = 1; true; i++) {
-			let s = new Date(year, 2, i, 10 - hours, 0 - minutesOffset);
-			let e = new Date(year, 10, i, 9 - hours, 0 - minutesOffset);
+			let s = new Date(year, 2, i, 10 - hoursOffset, 0 - minutesOffset);
+			let e = new Date(year, 10, i, 9 - hoursOffset, 0 - minutesOffset);
 
 			if (s.getUTCDay() == 0) {
 				c++
