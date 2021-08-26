@@ -451,6 +451,7 @@
 	let year = timeX.getUTCFullYear();
 	let month = timeX.getUTCMonth();
 	let date = timeX.getUTCDate();
+	let nextWeek = new Date(year, month, date).getTime() + 604800000;
 	let dateOffset;
 	let dateOffsetC;
 
@@ -600,6 +601,7 @@
 			realDays--;
 		}
 
+		// get suffix
 		if (realDays % 10 == 1) {
 			suffix = "st";
 		} else if (realDays % 10 == 2) {
@@ -609,6 +611,8 @@
 		} else {
 			suffix = "th";
 		}
+
+		// display text
 		if (false) {
 			counter.innerHTML = "<u>#</u> days of learning";
 		} else if (now < firstDate) {
@@ -769,8 +773,14 @@
 		return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) ? true : false;
 	}
 
-	// soft refresh
+	// refresh
 	function re() {
+		// hard refresh
+		if (new Date().getTime() >= nextWeek) {
+			location.reload();
+		}
+
+		// soft refresh
 		year = timeX.getUTCFullYear();
 		month = timeX.getUTCMonth();
 		date = timeX.getUTCDate();
