@@ -776,7 +776,7 @@
 	// refresh
 	function re() {
 		// hard refresh
-		if (new Date().getTime() >= nextWeek) {
+		if (new Date(year, month, date).getTime() >= nextWeek) {
 			location.reload();
 		}
 
