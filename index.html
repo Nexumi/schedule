@@ -28,7 +28,7 @@
 			font-weight: bold;
 			border-width: 3px;
 			border-radius: 4px;
-			border-color: gold;
+			border-color: #c99700;
 			border-style: solid;
 		}
 		.time {
@@ -443,14 +443,14 @@
 </body>
 <script type="text/javascript">
 	window.addEventListener('load', counter);
-	window.addEventListener('load', time);
+	window.addEventListener('load', clock);
 	window.addEventListener('load', cal);
 
 	// global variables
-	let timeX = new Date();
-	let year = timeX.getUTCFullYear();
-	let month = timeX.getUTCMonth();
-	let date = timeX.getUTCDate();
+	let time = new Date();
+	let year = time.getUTCFullYear();
+	let month = time.getUTCMonth();
+	let date = time.getUTCDate();
 	let nextWeek = new Date(year, month, date).getTime() + 604800000;
 	let dateOffset;
 	let dateOffsetC;
@@ -458,7 +458,7 @@
 	// counter function
 	function counter() {
 		let counter = document.getElementsByClassName("counter")[0];
-		let day = timeX.getUTCDay();
+		let day = time.getUTCDay();
 		let now = new Date(year, month, date - dateOffset).getTime();
 		let firstDate = new Date(2021, 7, 23).getTime();
 		let days = Math.floor((now - firstDate)/86400000);
@@ -624,12 +624,12 @@
 		}
 	}
 
-	// time functions
-	function time() {
-		timeX = new Date();
-		let hours = getHours(timeX.getUTCHours());
-		let minutes = zero(timeX.getUTCMinutes());
-		let seconds = zero(timeX.getUTCSeconds());
+	// clock functions
+	function clock() {
+		time = new Date();
+		let hours = getHours(time.getUTCHours());
+		let minutes = zero(time.getUTCMinutes());
+		let seconds = zero(time.getUTCSeconds());
 		let ap = (hours < 12) ? "AM" : "PM";
 		hours = apOffset(hours);
 		tz = (daylight()) ? "PDT" : "PST"
@@ -639,7 +639,7 @@
 			re();
 		}
 
-		setTimeout(time, 0);
+		setTimeout(clock, 0);
 	}
 	function getHours(h) {
 		h = (daylight()) ? h - 7 : h - 8;
@@ -671,12 +671,12 @@
 	function daylight() {
 		// daylight calculation times
 		let daylightStart;
-		let currentTime = timeX.getTime();
+		let currentTime = time.getTime();
 		let daylightEnd;
 
 		// offsets
-		let minutesOffset = timeX.getTimezoneOffset() % 60;
-		let hoursOffset = timeX.getTimezoneOffset() / 60 - minutesOffset / 60;
+		let minutesOffset = time.getTimezoneOffset() % 60;
+		let hoursOffset = time.getTimezoneOffset() / 60 - minutesOffset / 60;
 
 		// find daylight start and end times
 		let c = 0;
@@ -709,7 +709,7 @@
 		let today = document.getElementsByClassName("today");
 		let dates = document.getElementsByClassName("date");
 		let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-		let day = timeX.getUTCDay() - dateOffset;
+		let day = time.getUTCDay() - dateOffset;
 		day = dayFix(day);
 		let dateFix = date - dateOffset;
 
@@ -739,7 +739,7 @@
 			offset++;
 		}
 
-		day = timeX.getUTCDay() - dateOffset;
+		day = time.getUTCDay() - dateOffset;
 		day = dayFix(day);
 		offset = 0;
 		while (day != 6) {
@@ -781,9 +781,9 @@
 		}
 
 		// soft refresh
-		year = timeX.getUTCFullYear();
-		month = timeX.getUTCMonth();
-		date = timeX.getUTCDate();
+		year = time.getUTCFullYear();
+		month = time.getUTCMonth();
+		date = time.getUTCDate();
 		counter();
 		cal();
 	}
