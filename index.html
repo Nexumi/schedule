@@ -679,26 +679,26 @@
 		let hoursOffset = time.getTimezoneOffset() / 60 - minutesOffset / 60;
 
 		// find daylight start and end times
-		let c = 0;
+		let countS = 0;
+		let countE = true;
 		for (let i = 1; true; i++) {
-			let s = new Date(year, 2, i, 10 - hoursOffset, 0 - minutesOffset);
-			let e = new Date(year, 10, i, 9 - hoursOffset, 0 - minutesOffset);
+			let start = new Date(year, 2, i, 10 - hoursOffset, 0 - minutesOffset);
+			let end = new Date(year, 10, i, 9 - hoursOffset, 0 - minutesOffset);
 
-			if (s.getUTCDay() == 0) {
-				c++
+			if (start.getUTCDay() == 0) {
+				countS++
 			}
-
-			if (c == 1 && s.getUTCDay() == 0) {
-				daylightEnd = e.getTime();
+			if (countE && end.getUTCDay() == 0) {
+				countE = false;
+				daylightEnd = end.getTime();
 			}
-
-			if (c == 2) {
-				daylightStart = s.getTime();
+			if (countS == 2) {
+				daylightStart = start.getTime();
 				break;
 			}
 		}
 
-		return (currentTime > daylightStart && currentTime < daylightEnd) ? true : false;
+		return currentTime > daylightStart && currentTime < daylightEnd;
 	}
 
 	// calendar functions
@@ -770,7 +770,7 @@
 		return d;
 	}
 	function leap() {
-		return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) ? true : false;
+		return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
 	}
 
 	// refresh
