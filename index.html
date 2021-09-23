@@ -458,19 +458,21 @@
 	// counter function
 	function counter() {
 		let counter = document.getElementsByClassName("counter")[0];
-		let day = time.getUTCDay();
+		let day = time.getUTCDay() - dateOffset;
+		console.log(day)
 		let now = new Date(year, month, date - dateOffset).getTime();
 		let firstDate = new Date(2021, 7, 23).getTime();
 		let days = Math.floor((now - firstDate)/86400000);
+		console.log(days)
 		let weekends = Math.floor(days/7) * 2;
 		let realDays = (days - weekends) + 1;
 		let suffix;
 
 		// subtract weekends
-		if (days % 7 == 5) {
-			realDays--;
-		} else if (days % 7 == 6) {
+		if (day == 0) {
 			realDays -= 2;
+		} else if (day == 6) {
+			realDays--;
 		}
 
 			/* Fall 2021 */
