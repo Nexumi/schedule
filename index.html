@@ -459,6 +459,7 @@
 	function counter() {
 		let counter = document.getElementsByClassName("counter")[0];
 		let day = time.getUTCDay() - dateOffset;
+		day = dayFix(day);
 		let now = new Date(year, month, date - dateOffset).getTime();
 		let firstDate = new Date(2021, 7, 23).getTime();
 		let days = Math.floor((now - firstDate)/86400000);
