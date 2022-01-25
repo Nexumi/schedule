@@ -453,13 +453,13 @@
 	// counter function
 	function counter() {
 		let counter = document.getElementsByClassName("counter")[0];
-		let day = time.getUTCDay() - dateOffset;
+		let day = time.getUTCDay() + dateOffset;
 		day = dayFix(day);
-		let now = new Date(year, month, date - dateOffset).getTime();
+		let now = new Date(year, month, date + dateOffset).getTime();
 		let firstDate = new Date(2021, 7, 23).getTime();
 		let days = Math.floor((now - firstDate)/86400000);
-		let weekends = Math.floor(days/7) * 3;
-		let realDays = (days - weekends) + 1;
+		let noClass = Math.floor(days/7) * 3;
+		let realDays = (days - noClass) + 1;
 		let suffix;
 
 		// subtract no class days
@@ -471,132 +471,85 @@
 			realDays -= 3;
 		}
 
-			/* Fall 2021 */
-		// Labor Day
-		if (now >= 1630911600000) {
-			realDays--;
+		// subtract holidays
+		holidays = [
+				/* Fall 2021 */
+			// Labor Day
+			1630911600000,
+
+			// Veterans Day
+			1636617600000,
+
+			// Thanksgiving Break
+			1637568000000,
+			1637654400000,
+			1637740800000,
+			1637827200000,
+			1637913600000,
+
+			// End of Fall 2021
+			1639987200000,
+			1640073600000,
+			1640160000000,
+			1640246400000,
+			1640332800000,
+
+			1640592000000,
+			1640678400000,
+			1640764800000,
+			1640851200000,
+			1640937600000,
+
+			1641196800000,
+			1641283200000,
+			1641369600000,
+			1641456000000,
+			1641542400000,
+
+			1641801600000,
+			1641888000000,
+			1641974400000,
+			1642060800000,
+			1642147200000,
+
+			1642406400000,
+			1642492800000,
+			1642579200000,
+			1642665600000,
+			1642752000000,
+
+				/* Spring 2022 */
+			// Spring Break
+			1647846000000,
+			1647932400000,
+			1648018800000,
+			1648105200000,
+			1648191600000,
+
+			// Cesar Chavez Day
+			1648710000000
+		]
+		for (let i = 0; i < holidays.length; i++) {
+			if (now >= holidays[i]) {
+				realDays--
+			} else {
+				break
+			}
 		}
-		// Veterans Day
-		if (now >= 1636617600000) {
-			realDays--;
-		}
-		// Thanksgiving Break
-		if (now >= 1637568000000) {
-			realDays--;
-		}
-		if (now >= 1637654400000) {
-			realDays--;
-		}
-		if (now >= 1637740800000) {
-			realDays--;
-		}
-		if (now >= 1637827200000) {
-			realDays--;
-		}
-		if (now >= 1637913600000) {
-			realDays--;
-		}
-		// End of semester
-			// Week 1
-		if (now >= 1639987200000) {
-			realDays--;
-		}
-		if (now >= 1640073600000) {
-			realDays--;
-		}
-		if (now >= 1640160000000) {
-			realDays--;
-		}
-		if (now >= 1640246400000) {
-			realDays--;
-		}
-		if (now >= 1640332800000) {
-			realDays--;
-		}
-			// Week 2
-		if (now >= 1640592000000) {
-			realDays--;
-		}
-		if (now >= 1640678400000) {
-			realDays--;
-		}
-		if (now >= 1640764800000) {
-			realDays--;
-		}
-		if (now >= 1640851200000) {
-			realDays--;
-		}
-		if (now >= 1640937600000) {
-			realDays--;
-		}
-			// Week 3
-		if (now >= 1641196800000) {
-			realDays--;
-		}
-		if (now >= 1641283200000) {
-			realDays--;
-		}
-		if (now >= 1641369600000) {
-			realDays--;
-		}
-		if (now >= 1641456000000) {
-			realDays--;
-		}
-		if (now >= 1641542400000) {
-			realDays--;
-		}
-			// Week 4
-		if (now >= 1641801600000) {
-			realDays--;
-		}
-		if (now >= 1641888000000) {
-			realDays--;
-		}
-		if (now >= 1641974400000) {
-			realDays--;
-		}
-		if (now >= 1642060800000) {
-			realDays--;
-		}
-		if (now >= 1642147200000) {
-			realDays--;
-		}
-			// Week 5
-		if (now >= 1642406400000) {
-			realDays--;
-		}
-		if (now >= 1642492800000) {
-			realDays--;
-		}
-		if (now >= 1642579200000) {
-			realDays--;
-		}
-		if (now >= 1642665600000) {
-			realDays--;
-		}
-		if (now >= 1642752000000) {
-			realDays--;
-		}
-			/* Spring 2022 */
-		// Spring Break
-		if (now >= 1647846000000) {
-			realDays--;
-		}
-		if (now >= 1647932400000) {
-			realDays--;
-		}
-		if (now >= 1648018800000) {
-			realDays--;
-		}
-		if (now >= 1648105200000) {
-			realDays--;
-		}
-		if (now >= 1648191600000) {
-			realDays--;
-		}
-		// Cesar Chavez Day
-		if (now >= 1648710000000) {
-			realDays--;
+
+		// non-class day
+		function today() {
+			if (day == 5 || day == 6 || day == 0) {
+				return true
+			}
+
+			for (let i = 0; i < holidays.length; i++) {
+				if (now == holidays[i]) {
+					return true
+				}
+			}
+
+			return false
 		}
 
 		// get suffix
@@ -615,7 +568,7 @@
 			counter.innerHTML = "<u>118</u> days of learning";
 		} else if (now < firstDate) {
 			counter.innerHTML = "Soon<sup>TM</sup>";
-		} else if (day == 0 || day == 5 || day == 6 || /* Fall 2020 */ /* Labor Day */ now == 1630911600000 || /* Veterans Day */ now == 1636617600000 || /* Thanksgiving Break */ now == 1637568000000 || now == 1637654400000 || now == 1637740800000 || now == 1637827200000 || now == 1637913600000 || /* End of semester *//*Week 1*/ now == 1639987200000 || now == 1640073600000 || now == 1640160000000 || now == 1640246400000 || now == 1640332800000 || /*Week 2*/ now == 1640592000000 || now == 1640678400000 || now == 1640764800000 || now == 1640851200000 || now == 1640937600000 || /*Week 3*/ now == 1641196800000 || now == 1641283200000 || now == 1641369600000 || now == 1641456000000 || now == 1641542400000 || /* Week 4 */ now == 1641801600000 || now == 1641888000000 || now == 1641974400000 || now == 1642060800000 || now == 1642147200000 || /* Week 5 */ now == 1642406400000 || now == 1642492800000 || now == 1642579200000 || now == 1642665600000 || now == 1642752000000 || /* Spring 2021 */ /* Spring Break */ now == 1647846000000 || now == 1647932400000 || now == 1648018800000 || now == 1648105200000 || now == 1648191600000 || /* Cesar Chavez Day */ now == 1648710000000) {
+		} else if (today()) {
 			counter.innerHTML = "<u>" + realDays + "</u> days of learning";
 		} else {
 			counter.innerHTML = "<u>" + realDays + suffix + "</u> day of learning";
@@ -634,7 +587,7 @@
 		document.getElementsByClassName("time")[0].innerHTML = "<i>" + hours + ":" + minutes + ":" + seconds + " " + ap + "</i>" + " " + tz;
 
 		if (dateOffsetC != dateOffset) {
-			re();
+			refresh();
 		}
 
 		setTimeout(clock, 0);
@@ -644,10 +597,10 @@
 
 		if (h < 0) {
 			h += 24;
-			dateOffset = 1;
+			dateOffset = -1;
 		} else if (h >= 24) {
 			h -= 24;
-			dateOffset = -1;
+			dateOffset = 1;
 		} else {
 			dateOffset = 0;
 		}
@@ -704,9 +657,9 @@
 		let today = document.getElementsByClassName("today");
 		let dates = document.getElementsByClassName("date");
 		let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-		let day = time.getUTCDay() - dateOffset;
+		let day = time.getUTCDay() + dateOffset;
 		day = dayFix(day);
-		let dateFix = date - dateOffset;
+		let dateFix = date + dateOffset;
 
 		// reset color
 		for (let i = 0; i < 7; i++) {
@@ -734,7 +687,7 @@
 			offset++;
 		}
 
-		day = time.getUTCDay() - dateOffset;
+		day = time.getUTCDay() + dateOffset;
 		day = dayFix(day);
 		offset = 0;
 		while (day != 6) {
@@ -769,7 +722,7 @@
 	}
 
 	// refresh
-	function re() {
+	function refresh() {
 		// hard refresh
 		if (new Date(year, month, date).getTime() >= nextWeek) {
 			location.reload();
