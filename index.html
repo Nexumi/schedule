@@ -436,10 +436,6 @@
 	</table>
 </body>
 <script type="text/javascript">
-	// run functions on page load
-	window.addEventListener('load', counter);
-	window.addEventListener('load', clock);
-	window.addEventListener('load', cal);
 
 	// global variables
 	let time = new Date();
@@ -589,8 +585,6 @@
 		if (dateOffsetC != dateOffset) {
 			refresh();
 		}
-
-		setTimeout(clock, 0);
 	}
 	function getHours(h) {
 		h = (daylight()) ? h - 7 : h - 8;
@@ -735,5 +729,11 @@
 		counter();
 		cal();
 	}
+
+	// load functions
+	setInterval(clock)
+	counter();
+	clock();
+	cal();
 </script>
 </html>
