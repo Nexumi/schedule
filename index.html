@@ -619,22 +619,6 @@
 			return false
 		}
 
-		// get suffix
-		let suffix;
-		switch (realDays % 10) {
-			case 1:
-				suffix = "st";
-				break;
-			case 2:
-				suffix = "nd";
-				break;
-			case 3:
-				suffix = "rd"
-				break;
-			default:
-				suffix = "th"
-		}
-
 		// display text
 		if (now > 1671177600000) {
 			counter.innerHTML = "<u>78</u> days of learning";
@@ -643,13 +627,31 @@
 		} else if (today()) {
 			counter.innerHTML = "<u>" + realDays + "</u> days of learning";
 		} else {
-			counter.innerHTML = "<u>" + realDays + suffix + "</u> day of learning";
+			counter.innerHTML = "<u>" + suffix(realDays) + "</u> day of learning";
 		}
 	}
+
 	function center() {
 		let table = document.getElementsByTagName("table")[0];
 		let container = document.getElementsByTagName("p")[0];
 		container.style.width = table.offsetWidth + "px";
+	}
+
+	function suffix(num) {
+		if (num % 100 > 10 && num % 100 < 20) {
+			return num + "th";
+		}
+
+		switch(num % 10) {
+			case 1:
+				return num + "st";
+			case 2:
+				return num + "nd";
+			case 3:
+				return num + "rd";
+			default:
+				return num + "th";
+		}
 	}
 
 	// clock functions
@@ -667,6 +669,7 @@
 			refresh();
 		}
 	}
+
 	function getHours(h) {
 		h = (daylight()) ? h - 7 : h - 8;
 
@@ -682,9 +685,11 @@
 
 		return h;
 	}
+
 	function zero(ms) {
 		return (ms < 10) ? "0" + ms : ms;
 	}
+
 	function apOffset(h) {
 		if (h > 12) {
 			h -= 12;
@@ -694,6 +699,7 @@
 
 		return h;
 	}
+
 	function daylight() {
 		// daylight calculation times
 		let daylightStart;
@@ -783,6 +789,7 @@
 			}
 		}
 	}
+
 	function dayFix(d) {
 		if (d < 0) {
 			d += 7;
@@ -792,6 +799,7 @@
 
 		return d;
 	}
+
 	function leap() {
 		return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
 	}
