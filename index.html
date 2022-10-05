@@ -509,6 +509,8 @@
 </body>
 </body>
 <script type="text/javascript">
+	"use strict";
+
 	// global variables
 	let time = new Date();
 	let year = time.getUTCFullYear();
@@ -662,7 +664,7 @@
 		let seconds = zero(time.getUTCSeconds());
 		let ap = (hours < 12) ? "AM" : "PM";
 		hours = apOffset(hours);
-		tz = (daylight()) ? "PDT" : "PST"
+		var tz = (daylight()) ? "PDT" : "PST"
 		document.getElementsByClassName("time")[0].innerHTML = "<i>" + hours + ":" + minutes + ":" + seconds + " " + ap + "</i>" + " " + tz;
 
 		if (dateOffsetC != dateOffset) {
