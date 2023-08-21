@@ -246,7 +246,7 @@
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td rowspan="5" class="class">AA S 320 - 01<br>Lecture<br>12:30 AM - 1:45 PM<br>Gymnasium 115</td>
+			<td rowspan="5" class="class message">AA S 320 - 01<br>Lecture<br>12:30 AM - 1:45 PM<br>Gymnasium 115</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
@@ -908,9 +908,32 @@
 		cal();
 	}
 
+	// message
+	function message() {
+		let count = 0;
+
+		function show() {
+			if (!count) {
+				setTimeout(function() {
+					count = 0;
+				}, 5000);
+			}
+
+			count++;
+
+			if (count >= 5) {
+				element.innerHTML = element.innerHTML + "<br>Sept. 25 | Oct. 23 | Nov. 6";
+				element.removeEventListener("click", show);
+			}
+		}
+		const element = document.getElementsByClassName("message")[0];
+		element.addEventListener("click", show);
+	}
+
 	// load functions
 	window.addEventListener("resize", center);
 	setInterval(clock)
+	message();
 	counter();
 	center();
 	clock();
