@@ -649,7 +649,7 @@
 
 		// non-class day
 		function today() {
-			if (day == 6 || day == 0 || holidays.includes(now)) {
+			if ([0, 2, 6].includes(day) || holidays.includes(now)) {
 				return true
 			}
 
