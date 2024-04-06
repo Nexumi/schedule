@@ -212,10 +212,9 @@
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
-			<td>&nbsp;</td>
+			<td rowspan="4" class="work">Work<br>11:00 AM - 12:00 PM<br>In-Person</td>
 		</tr>
 		<tr>
-			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
@@ -230,10 +229,8 @@
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
-			<td>&nbsp;</td>
 		</tr>
 		<tr>
-			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
@@ -852,29 +849,6 @@
 		date = time.getUTCDate();
 		counter();
 		cal();
-	}
-
-	// message
-	function message() {
-		let count = 0;
-
-		function show() {
-			if (!count) {
-				setTimeout(function() {
-					count = 0;
-				}, 5000);
-			}
-
-			count++;
-
-			if (count >= 5) {
-				element.innerHTML = element.innerHTML + "<br>Sept. 25 | Oct. 23 | Nov. 6";
-				element.removeEventListener("click", show);
-			}
-		}
-		
-		const element = document.getElementsByClassName("message")[0];
-		element.addEventListener("click", show);
 	}
 
 	// load functions
